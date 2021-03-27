@@ -2,11 +2,14 @@ import requests
 from bs4 import BeautifulSoup as bs
 
 git_user = input('Enter Github username: ')
-url = 'https://github.com/'+git_user+'?tab=repositories'
+url = 'https://github.com/'+git_user
 r = requests.get(url)
 soup = bs(r.content, 'html.parser')
 profile_image = soup.find('img', {'alt' : 'Avatar'})['src']
 print("Link for the Profile Image : " + profile_image)
+url = url+'?tab=repositories'
+r = requests.get(url)
+soup = bs(r.content, 'html.parser')
 all_repos = soup.findAll('li', {'itemprop' : 'owns'})
 repo_names = []
 for repo in all_repos:
